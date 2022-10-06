@@ -11,6 +11,7 @@ public class Medida {
         this.tiempo = tiempo;
         this.nombre_sensor = nombre_sensor;
         this.coordenada = coordenada;
+
     }
 
     public Medida() {
