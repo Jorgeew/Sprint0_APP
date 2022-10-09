@@ -1,9 +1,12 @@
 package com.jorge.sprint0_jorgelarrosaquesada;
 
 public class Coordenada {
+
+    //Atributos
     private float x;
     private float y;
 
+    //Constructor
     public Coordenada(float x, float y) {
         this.x = x;
         this.y = y;
@@ -12,6 +15,7 @@ public class Coordenada {
     public Coordenada() {
     }
 
+    //Getter Setter
     public float getX() {
         return x;
     }

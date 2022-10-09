@@ -38,6 +38,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    String ip = "192.168.0.14";
+
     // --------------------------------------------------------------
     // --------------------------------------------------------------
     private static final String ETIQUETA_LOG = ">>>>";
@@ -59,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
     // --------------------------------------------------------------
     // --------------------------------------------------------------
     private Button enviarDatos;
+    private Button enviarDatosFake;
+
 
     // --------------------------------------------------------------
     // --------------------------------------------------------------
@@ -72,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         //Librería encargada ser cocentarse con el Servidor
         AndroidNetworking.initialize(getApplicationContext());
 
-        //Coordenadas
+        //Coordenadas mostrar Pantalla
         tvLatitud = (TextView)findViewById(R.id.Latitud);
         tvLongitud = (TextView)findViewById(R.id.Longitud);
 
@@ -101,12 +105,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        enviarDatosFake = findViewById(R.id.button_fake);
+        enviarDatosFake.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                botonEnviarAlServidorFake(view);
+            }
+        });
+
         Log.d(ETIQUETA_LOG, " onCreate(): empieza ");
 
         inicializarBlueTooth();
 
         Log.d(ETIQUETA_LOG, " onCreate(): termina ");
 
+        //Major Minor mostrar Pantalla
         datos_major = findViewById(R.id.major_datos);
         datos_minor = findViewById(R.id.minor_datos);
 
@@ -418,7 +431,46 @@ public class MainActivity extends AppCompatActivity {
         //Medida medida = guardarMedida("Test",major_datos, minor_datos);
         Medida medida = guardarMedida(major_datos, minor_datos);
 
-        Log.d("medida", "medida: " + medida.getValor() + " " + medida.getTiempo() + " " + medida.getNombre_sensor() + " " + medida.getCoordenada().getX() + " " + medida.getCoordenada().getY());
+        //Envíar datos POST
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("id", null);
+            jsonObject.put("valor", medida.getValor());
+            jsonObject.put("fecha", medida.getTiempo());
+            jsonObject.put("nombreSensor", medida.getNombre_sensor());
+            jsonObject.put("longitud", medida.getCoordenada().getX());
+            jsonObject.put("latitud", medida.getCoordenada().getY());
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        AndroidNetworking.post("http://" + ip + ":8080/insertarMedicion")//Recordar cambiar ip cada vez que cambies de red
+                .addJSONObjectBody(jsonObject) // posting json
+                .setTag("test")
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONArray(new JSONArrayRequestListener() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        // do anything with response
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                    }
+                });
+
+        Toast.makeText(getApplicationContext(),"Datos Enviados",Toast.LENGTH_SHORT).show();
+    }
+
+    public void botonEnviarAlServidorFake(View view) {
+        //Medida medida = guardarMedida("Test",major_datos, minor_datos);
+        Medida medida = guardarMedida(2, 2);
+
+        //Log.d("medida", "medida: " + medida.getValor() + " " + medida.getTiempo() + " " + medida.getNombre_sensor() + " " + medida.getCoordenada().getX() + " " + medida.getCoordenada().getY());
 
         //Envíar datos POST
         JSONObject jsonObject = new JSONObject();
@@ -435,7 +487,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        AndroidNetworking.post("http://192.168.18.55:8080/insertarMedicion")//Recordar cambiar ip cada vez que cambies de red
+        AndroidNetworking.post("http://" + ip + ":8080/insertarMedicion")//Recordar cambiar ip cada vez que cambies de red
                 .addJSONObjectBody(jsonObject) // posting json
                 .setTag("test")
                 .setPriority(Priority.MEDIUM)

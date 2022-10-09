@@ -1,22 +1,27 @@
 package com.jorge.sprint0_jorgelarrosaquesada;
 
+import android.util.Log;
+
 public class Medida {
+
+    //Atributos
     private float valor;
     private String tiempo;
     private String nombre_sensor;
     private Coordenada coordenada;
 
+    //Constructor
     public Medida(String id, float valor, String tiempo, String nombre_sensor, Coordenada coordenada) {
         this.valor = valor;
         this.tiempo = tiempo;
         this.nombre_sensor = nombre_sensor;
         this.coordenada = coordenada;
-
     }
 
     public Medida() {
     }
 
+    //Getter Setter
     public float getValor() {
         return valor;
     }
