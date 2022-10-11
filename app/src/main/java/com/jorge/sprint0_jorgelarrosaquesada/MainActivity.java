@@ -35,10 +35,15 @@ import org.json.JSONObject;
 import java.util.Date;
 import java.util.List;
 
+//----------------------------------------------------
+// Archivo: MainActivity.java
+// Jorge Larrosa Quesada
+// Sprint 0
+//----------------------------------------------------
 
 public class MainActivity extends AppCompatActivity {
 
-    String ip = "192.168.0.14";
+    String ip = "192.168.43.164";
 
     // --------------------------------------------------------------
     // --------------------------------------------------------------

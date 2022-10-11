@@ -3,6 +3,13 @@ package com.jorge.sprint0_jorgelarrosaquesada;
 
 import java.util.Arrays;
 
+//----------------------------------------------------
+// Archivo: TramaIBeacon.java
+// Jorge Larrosa Quesada
+// Sprint 0
+//----------------------------------------------------
+
+
 public class TramaIBeacon {
     private byte[] prefijo = null; // 9 bytes
     private byte[] uuid = null; // 16 bytes

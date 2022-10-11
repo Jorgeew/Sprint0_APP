@@ -2,6 +2,12 @@ package com.jorge.sprint0_jorgelarrosaquesada;
 
 import android.util.Log;
 
+//----------------------------------------------------
+// Archivo: Medida.java
+// Jorge Larrosa Quesada
+// Sprint 0
+//----------------------------------------------------
+
 public class Medida {
 
     //Atributos
@@ -11,7 +17,7 @@ public class Medida {
     private Coordenada coordenada;
 
     //Constructor
-    public Medida(String id, float valor, String tiempo, String nombre_sensor, Coordenada coordenada) {
+    public Medida(float valor, String tiempo, String nombre_sensor, Coordenada coordenada) {
         this.valor = valor;
         this.tiempo = tiempo;
         this.nombre_sensor = nombre_sensor;

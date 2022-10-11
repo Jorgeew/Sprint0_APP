@@ -1,5 +1,11 @@
 package com.jorge.sprint0_jorgelarrosaquesada;
 
+//----------------------------------------------------
+// Archivo: Coordenada.java
+// Jorge Larrosa Quesada
+// Sprint 0
+//----------------------------------------------------
+
 public class Coordenada {
 
     //Atributos

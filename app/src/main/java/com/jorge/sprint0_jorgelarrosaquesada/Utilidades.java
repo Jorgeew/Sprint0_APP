@@ -5,6 +5,12 @@ import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.util.UUID;
 
+//----------------------------------------------------
+// Archivo: Utilidades.java
+// Jorge Larrosa Quesada
+// Sprint 0
+//----------------------------------------------------
+
 public class Utilidades {
 
     // -------------------------------------------------------------------------------
