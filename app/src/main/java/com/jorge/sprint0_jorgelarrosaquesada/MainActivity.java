@@ -43,7 +43,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    String ip = "192.168.43.164";
+    String ip = "192.168.0.14";
 
     // --------------------------------------------------------------
     // --------------------------------------------------------------
@@ -59,9 +59,6 @@ public class MainActivity extends AppCompatActivity {
     // --------------------------------------------------------------
     private float major_datos;
     private int minor_datos;
-    private TextView datos_major;
-    private TextView datos_minor;
-
 
     // --------------------------------------------------------------
     // --------------------------------------------------------------
@@ -72,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
     // --------------------------------------------------------------
     // --------------------------------------------------------------
     private LocationManager locManager;
-    private TextView tvLatitud, tvLongitud;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,18 +77,13 @@ public class MainActivity extends AppCompatActivity {
         //Librería encargada ser cocentarse con el Servidor
         AndroidNetworking.initialize(getApplicationContext());
 
-        //Coordenadas mostrar Pantalla
-        tvLatitud = (TextView)findViewById(R.id.Latitud);
-        tvLongitud = (TextView)findViewById(R.id.Longitud);
-
         //Se solicitan los permisos para que el usuario seleccione si desea permitir el acceso al GPS del dispositivo:
         ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
         //Se comprueba si se han concedido los permisos para mostrar los datos de latitud, longitud, altura y precisión del dispositivo
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
         {
-            tvLatitud.setText("No se han definido los permisos necesarios.");
-            tvLongitud.setText("");
+            Toast.makeText(getApplicationContext(),"Faltan los permisos",Toast.LENGTH_SHORT).show();
             ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
             return;
@@ -123,10 +114,6 @@ public class MainActivity extends AppCompatActivity {
         inicializarBlueTooth();
 
         Log.d(ETIQUETA_LOG, " onCreate(): termina ");
-
-        //Major Minor mostrar Pantalla
-        datos_major = findViewById(R.id.major_datos);
-        datos_minor = findViewById(R.id.minor_datos);
 
     } // onCreate()
 
@@ -202,8 +189,8 @@ public class MainActivity extends AppCompatActivity {
         //Obtenemos los datos que se envían por el Major y el Minor
         major_datos = (Utilidades.bytesToInt(tib.getMajor()));
         minor_datos = (Utilidades.bytesToInt(tib.getMinor()));
-        datos_major.setText((int) major_datos);
-        datos_minor.setText(minor_datos);
+        //datos_major.setText((int) major_datos);
+        //datos_minor.setText(minor_datos);
 
         Log.d(ETIQUETA_LOG, " -------------------- DATOS -------------------- ");
         //Log.d(ETIQUETA_LOG, " prefijo  = " + Utilidades.bytesToHexString(tib.getPrefijo()));
@@ -415,10 +402,6 @@ public class MainActivity extends AppCompatActivity {
 
         //Posteriormente, se asigna a la variable de tipo Location que accederá a la última posición conocida proporcionada por el proveedor
         @SuppressLint("MissingPermission") Location location = locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-        tvLatitud.setText(String.valueOf(location.getLatitude()));
-        tvLongitud.setText(String.valueOf(location.getLongitude()));
-
 
         Coordenada coordenada = new Coordenada();
         coordenada.setX((float) location.getLongitude());
